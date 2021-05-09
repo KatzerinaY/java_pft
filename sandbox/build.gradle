@@ -2,5 +2,15 @@ plugins {
     id 'java-library'
     id 'application'
 }
+mainClassName = 'ru.stqa.pft.sandbox.MyFirstProgramm'
+repositories {
+    mavenCentral()
+}
 
-mainClassName = 'MyFirstProgramm'
+dependencies {
+    implementation 'org.testng:testng:7.4.0'
+}
+
+test{
+    useTestNG()
+}
