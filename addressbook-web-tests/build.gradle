@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.4.0'
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+}
+
+test{
+    useTestNG()
+}
