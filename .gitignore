@@ -1,3 +1,16 @@
 /sandbox/.gradle
 /sandbox/gradle
-/sandbox/build
+/sandbox/gradlew
+/sandbox/gradlew.bat
+/sandbox/build/
+/sandbox/.idea
+
+/addressbook-web-tests/.gradle
+/addressbook-web-tests/gradle
+/addressbook-web-tests/gradlew
+/addressbook-web-tests/gradlew.bat
+/addressbook-web-tests/build/
+/addressbook-web-tests/.idea
+
+.gradle/
+.idea/
