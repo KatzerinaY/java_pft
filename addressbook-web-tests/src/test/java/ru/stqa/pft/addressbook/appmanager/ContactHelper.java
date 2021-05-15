@@ -39,4 +39,11 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.name("selected[]")).click();
     }
 
+    public void initContactModification() {
+        click(By.cssSelector("[alt=Edit]"));
+    }
+
+    public void submitContactModification() {
+        click(By.name("update"));
+    }
 }
