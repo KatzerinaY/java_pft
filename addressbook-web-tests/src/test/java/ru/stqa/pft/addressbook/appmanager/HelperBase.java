@@ -1,13 +1,13 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.concurrent.TimeUnit;
 
 public class HelperBase {
 
     protected WebDriver wd;
-    protected boolean acceptNextAlert = true;
 
     public HelperBase(WebDriver wd) {
         this.wd = wd;
@@ -15,26 +15,53 @@ public class HelperBase {
 
     protected void type(By locator, String text) {
         click(locator);
-        wd.findElement(locator).clear();
-        wd.findElement(locator).sendKeys(text);
+        if (text != null) {
+            String existingText =  wd.findElement(locator).getAttribute("value");
+            if (! text.equals(existingText)) {
+                wd.findElement(locator).clear();
+                wd.findElement(locator).sendKeys(text);
+            }
+        }
     }
 
     protected void click(By locator) {
         wd.findElement(locator).click();
     }
 
-    protected String closeAlertAndGetItsText() {
+    protected boolean closeAlertWithAcceptOrDismiss(boolean acceptNextAlert) {
         try {
             Alert alert = wd.switchTo().alert();
-            String alertText = alert.getText();
+
             if (acceptNextAlert) {
                 alert.accept();
             } else {
                 alert.dismiss();
             }
-            return alertText;
-        } finally {
-            acceptNextAlert = true;
+            return true;
+        } catch (NoAlertPresentException e){
+            return false;
         }
+    }
+
+    protected boolean isElementPresent(By locator) {
+        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        boolean r;
+        try {
+            wd.findElement(locator);
+            r = true;
+        } catch (NoSuchElementException ex){
+            r = false;
+        }
+        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        return r;
+    }
+
+    protected void selectedIfPresent(By locator,String visibleText) {
+        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        try {
+            new Select(wd.findElement(locator)).selectByVisibleText(visibleText);
+        } catch (Exception ex) {
+        }
+        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 }
