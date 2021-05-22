@@ -6,6 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.testng.Assert.assertTrue;
 
@@ -43,8 +47,9 @@ public class ContactHelper extends HelperBase {
         assertTrue(closeAlertWithAcceptOrDismiss(true));
     }
 
-    public void selectContact() {
-        wd.findElement(By.name("selected[]")).click();
+    public void selectContact(int index) {
+        List<WebElement> l = wd.findElements(By.name("selected[]"));
+        l.get(index).click();
     }
 
     public void initContactModification() {
@@ -63,5 +68,20 @@ public class ContactHelper extends HelperBase {
 
     public boolean isThereContact() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement element: elements){
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+
+            String lastname = element.findElement(By.xpath(".//td[2]")).getText();
+            String firstname = element.findElement(By.xpath(".//td[3]")).getText();
+
+            ContactData contact = new ContactData(id, firstname,lastname, null,null,null,"[none]");
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }
