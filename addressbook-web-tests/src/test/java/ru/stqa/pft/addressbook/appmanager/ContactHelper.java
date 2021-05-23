@@ -50,8 +50,9 @@ public class ContactHelper extends HelperBase {
         l.get(index).click();
     }
 
-    public void initContactModification() {
-        click(By.cssSelector("[alt=Edit]"));
+    public void initContactModification(int index) {
+        List<WebElement> l = wd.findElements(By.cssSelector("[alt=Edit]"));
+        l.get(index).click();
     }
 
     public void submitContactModification() {
