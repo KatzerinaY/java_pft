@@ -11,7 +11,7 @@ public class NavigationHelper extends HelperBase {
         super(wd);
     }
 
-    public void gotoGroupPage() {
+    public void groupPage() {
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         if (isElementPresent(By.tagName("h1"))
             && wd.findElement(By.tagName("h1")).getText().equals("Groups")
