@@ -3,12 +3,15 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.ArrayList;
+import java.time.Instant;
 import java.util.List;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static org.testng.Assert.assertTrue;
 
 public class ContactHelper extends HelperBase {
@@ -45,14 +48,12 @@ public class ContactHelper extends HelperBase {
         assertTrue(closeAlertWithAcceptOrDismiss(true));
     }
 
-    public void selectContact(int index) {
-        List<WebElement> l = wd.findElements(By.name("selected[]"));
-        l.get(index).click();
+    public void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
     }
 
-    public void initContactModification(int index) {
-        List<WebElement> l = wd.findElements(By.cssSelector("[alt=Edit]"));
-        l.get(index).click();
+    public void initContactModification(int id) {
+        wd.findElement(By.xpath("//a[contains(@href, 'edit.php?id=" + id + "')]")).click();
     }
 
     public void submitContactModification() {
@@ -65,28 +66,29 @@ public class ContactHelper extends HelperBase {
         submitContactCreation();
     }
 
-    public void modify(int index, ContactData contact) {
-        initContactModification(index);
+    public void modify(ContactData contact) {
+        initContactModification(contact.getId());
         fillContactForm(contact,false);
         submitContactModification();
     }
 
-    public void delete(int index) {
-        selectContact(index);
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
         deleteSelectedContacts();
     }
 
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<>();
-        List<WebElement> elements = wd.findElement(By.id("maintable")).findElements(By.name("entry"));
+    public Contacts all() {
+        Contacts contacts = new Contacts();
+        WebDriverWait wait = new WebDriverWait(wd,10);
+        WebElement maintable = wait.until(presenceOfElementLocated(By.id("maintable")));
+        List<WebElement> elements = maintable.findElements(By.name("entry"));
         for (WebElement element: elements){
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
 
             String lastname = element.findElement(By.xpath(".//td[2]")).getText();
             String firstname = element.findElement(By.xpath(".//td[3]")).getText();
 
-            ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withGroup("[none]");
-            contacts.add(contact);
+            contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withGroup("[none]"));
         }
         return contacts;
     }
