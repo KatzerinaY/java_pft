@@ -67,9 +67,13 @@ public class GroupDataGenerator {
 
         String json = gson.toJson(groups);
 
-        Writer writer = new FileWriter(file);
-        writer.write(json);
-        writer.close();
+//        Writer writer = new FileWriter(file);
+//        writer.write(json);
+//        writer.close();
+
+        try (Writer writer = new FileWriter(file)){  // to close automatically
+            writer.write(json);
+        }
     }
 
     private void saveXml(List<GroupData> groups, File file) throws IOException {

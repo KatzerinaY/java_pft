@@ -40,9 +40,6 @@ public class ContactCreationTests extends TestBase {
     @Test(dataProvider = "validContactsFromJSON")
     public void testContactCreation(ContactData contact) {
 
-//        ContactData contact = new ContactData().withFirstname("Jim").withLastname("Smith")
-//                              .withAddress("New-York, 24 Avenue,35").withPhoneHome("+1777454545")
-//                              .withEmail("jm123smith@m.ru").withPhoto(photo);
         Contacts before = app.contact().all();
         app.contact().create(contact.withPhoto(new File("src/test/resources/kater.jpg")));
         app.goTo().returnToMainPage();
