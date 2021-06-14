@@ -1,38 +1,61 @@
 package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
-
+    @Id // for hibernate
+    @Column(name = "id")// for hibernate
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname") //can be used for different only
     private String firstname;
     @Expose
+    @Column(name = "lastname")
     private String lastname;
     @Expose
+    @Column(name = "address")
+    @Type(type = "text")// for hibernate
     private String address;
     @Expose
+    @Column(name = "home")
+    @Type(type = "text")// for hibernate
     private String phoneHome;
+    @Column(name = "work")
+    @Type(type = "text")// for hibernate
     private String phoneWork;
+    @Column(name = "mobile")
+    @Type(type = "text")// for hibernate
     private String phoneMob;
+    @Transient //no use this field for hibernate
     private String allPhones;
     @Expose
+    @Type(type = "text")// for hibernate
     private String email;
+    @Type(type = "text")// for hibernate
     private String email2;
+    @Type(type = "text")// for hibernate
     private String email3;
+    @Transient
     private String allEmails;
+    @Transient
     private String group;
-    private File photo;
+    @Column(name = "photo")
+    @Type(type = "text")// for hibernate
+    private String photo;
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
