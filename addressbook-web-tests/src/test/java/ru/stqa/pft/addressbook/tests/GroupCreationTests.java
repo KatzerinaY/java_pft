@@ -21,8 +21,8 @@ public class GroupCreationTests extends TestBase {
 
     @DataProvider
     public Iterator<Object[]> validGroupsFromCSV() throws IOException {
-        List<Object[]> list = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.csv")));
+      List<Object[]> list = new ArrayList<>();
+      try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.csv")))) {
         String line = reader.readLine();
         while (line != null) {
             String[] split = line.split(";");
@@ -30,12 +30,13 @@ public class GroupCreationTests extends TestBase {
             line = reader.readLine();
         }
         return list.iterator();
+      }
     }
 
     @DataProvider
     public Iterator<Object[]> validGroupsFromXML() throws IOException {
 
-        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.xml")));
+      try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.xml")))) {
         String xml = "";
         String line = reader.readLine();
         while (line != null) {
@@ -46,6 +47,7 @@ public class GroupCreationTests extends TestBase {
         xStream.processAnnotations(GroupData.class);
         List<GroupData> groups = (List<GroupData>) xStream.fromXML(xml);
         return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+      }
     }
 
     @DataProvider
