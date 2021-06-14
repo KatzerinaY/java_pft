@@ -51,7 +51,11 @@ public class ContactData {
     private String photo;
 
     public File getPhoto() {
-        return new File(photo);
+        if (photo == null) {
+            return null;
+        } else {
+            return new File(photo);
+        }
     }
 
     public ContactData withPhoto(File photo) {
@@ -189,11 +193,17 @@ public class ContactData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
+        return id == that.id
+                && Objects.equals(firstname, that.firstname)
+                && Objects.equals(lastname, that.lastname)
+                && Objects.equals(address, that.address)
+                && Objects.equals(email, that.email)
+                && Objects.equals(phoneHome, that.phoneHome)
+                ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname);
+        return Objects.hash(id, firstname, lastname, address, email, phoneHome);
     }
 }
