@@ -15,7 +15,7 @@ public class ContactModificationTests extends TestBase{
         if (app.db().contacts().size()==0){
             app.contact().create(new ContactData().withFirstname("Jim").withLastname("Smith")
                     .withAddress("New-York, 24 Avenue,35").withPhoneHome("+1777454545")
-                    .withEmail("jm123smith@m.ru").withGroup("test1"));
+                    .withEmail("jm123smith@m.ru"));
             app.goTo().returnToMainPage();
         }
     }
