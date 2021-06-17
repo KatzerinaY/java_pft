@@ -21,19 +21,19 @@ public class HttpSession {
 
     public HttpSession(ApplicationManager app) {
         this.app = app;
-        httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build(); //стратегия перенаправлений
+        httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build(); //Strategy перенаправлений
     }
 
     public boolean login(String username, String password) throws IOException {
-        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/login.php"); //создается пустой запрос
+        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/login.php"); //cоздает пуcтой запроc
         List<NameValuePair> params = new ArrayList<NameValuePair>(); //формирование параметров
         params.add(new BasicNameValuePair("username", username));
         params.add(new BasicNameValuePair("password", password));
         params.add(new BasicNameValuePair("secure_session", "on"));
         params.add(new BasicNameValuePair("return", "index.php"));
         post.setEntity(new UrlEncodedFormEntity(params)); //упаковка параметров
-        CloseableHttpResponse response = httpClient.execute(post);//отправка запроса
-        String body = geTextFrom(response);// получаем ответ текст страницы
+        CloseableHttpResponse response = httpClient.execute(post);//отправка запроcа
+        String body = geTextFrom(response);// получаем ответ Text cтраницы
         return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
     }
 
