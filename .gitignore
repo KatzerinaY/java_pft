@@ -12,6 +12,13 @@
 /addressbook-web-tests/build/
 /addressbook-web-tests/.idea
 
+/mantis-tests/.gradle
+/mantis-tests/gradle
+/mantis-tests/gradlew
+/mantis-tests/gradlew.bat
+/mantis-tests/build/
+/mantis-tests/.idea
+
 .gradle/
 .idea/
 *.log
