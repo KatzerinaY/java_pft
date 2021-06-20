@@ -20,6 +20,8 @@ public class ApplicationManager {
     private FtpHelper ftp;
     private MailHelper mail;
     private JamesHelper james;
+    private SessionHelper onPage;
+    private SoapHelper soap;
 
     public ApplicationManager(String browser)  {
         this.browser = browser;
@@ -54,6 +56,13 @@ public class ApplicationManager {
         return registrationHelper;
     }
 
+//    public SessionHelper onPage() {
+//        if (onPage == null) {
+//            onPage = new SessionHelper(this);
+//        }
+//        return onPage;
+//    }
+
     public FtpHelper ftp() {
         if (ftp == null) {
             ftp = new FtpHelper(this);
@@ -73,6 +82,13 @@ public class ApplicationManager {
             james = new JamesHelper(this);
         }
         return james;
+    }
+
+    public SoapHelper soap(){
+        if (soap == null) {
+            soap = new SoapHelper(this);
+        }
+        return soap;
     }
 
     public WebDriver getDriver() {
