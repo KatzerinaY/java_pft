@@ -15,7 +15,10 @@ dependencies {
 }
 
 test{
-    useTestNG()
+    useTestNG ()
+    if (project.hasProperty('target')){
+        systemProperty 'target', "${target}"
+    }
 }
 
 
