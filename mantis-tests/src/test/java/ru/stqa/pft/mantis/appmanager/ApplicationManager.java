@@ -20,7 +20,7 @@ public class ApplicationManager {
     private FtpHelper ftp;
     private MailHelper mail;
     private JamesHelper james;
-    private SessionHelper onPage;
+    private SessionHelper helper;
     private SoapHelper soap;
 
     public ApplicationManager(String browser)  {
@@ -56,12 +56,12 @@ public class ApplicationManager {
         return registrationHelper;
     }
 
-//    public SessionHelper onPage() {
-//        if (onPage == null) {
-//            onPage = new SessionHelper(this);
-//        }
-//        return onPage;
-//    }
+    public SessionHelper helper() {
+        if (helper == null) {
+            helper = new SessionHelper(this);
+        }
+        return helper;
+    }
 
     public FtpHelper ftp() {
         if (ftp == null) {
